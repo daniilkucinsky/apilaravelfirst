@@ -12,7 +12,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::find();
+        return Post::all();
     }
 
     /**
@@ -25,14 +25,16 @@ class PostController extends Controller
             'body' => 'required'
         ]);
 
+        $post = Post::create($fields);
         return $post;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
+        $post = Post::find($id);
         return $post;
     }
 
@@ -45,8 +47,9 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'body' => 'required'
         ]);
-
+        $post = Post::find($id);
         $post->update($fields);
+
 
         return $post;
     }
@@ -54,8 +57,9 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy($id)
     {
+        $post = Post::find($id);
         $post->delete();
         return ['message' => "The post ($post->id) has been deleted"];
     }
